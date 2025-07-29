@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio | Esley Reginaldo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1f25 0%, #0c0e12 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+        
+        .portfolio-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 300;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .therapist-name {
+            color: #a3b1c6;
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            color: #6a7b94;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Livro Estilo */
+        .book-container {
+            position: relative;
+            width: 95%;
+            max-width: 900px;
+            height: 550px;
+            perspective: 2000px;
+            margin-bottom: 3rem;
+        }
+        
+        .book {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: #1e2329;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform-origin: left center;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .page-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 1.5rem;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #d4af37;
+            font-weight: 400;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .page-subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #a3b1c6;
+            max-width: 90%;
+            line-height: 1.6;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 250px;
+            background: #2d3748;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            border: 2px dashed #4a5568;
+            color: #a0aec0;
+            font-style: italic;
+        }
+        
+        .image-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .text-placeholder {
+            width: 100%;
+            padding: 1rem;
+            background: #2d3748;
+            border-radius: 8px;
+            margin-top: 1rem;
+            color: #a0aec0;
+            font-style: italic;
+            border: 2px dashed #4a5568;
+        }
+        
+        .page-num {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            color: #4a5568;
+            font-size: 1rem;
+        }
+        
+        /* Controles de navegação */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            color: #1a1f25;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            font-weight: 600;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(212, 175, 55, 0.6);
+        }
+        
+        .nav-btn:disabled {
+            background: #4a5568;
+            color: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .page-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .page-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4a5568;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .page-dot.active {
+            background: #d4af37;
+            transform: scale(1.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0d1117 0%, #1a1f25 100%);
+            color: #a3b1c6;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 3rem;
+            border-top: 1px solid #2d3748;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 10px;
+        }
+        
+        .footer-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #d4af37;
+            font-weight: 300;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+        }
+        
+        .social-icons {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 1.8rem;
+        }
+        
+        .social-icons a {
+            color: #d4af37;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: #ff416c;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+        
+        /* Animações */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(106, 17, 203, 0.6); }
+            50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(106, 17, 203, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(106, 17, 203, 0.6); }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 900px) {
+            .book-container {
+                height: 500px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .image-placeholder {
+                height: 200px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .book-container {
+                height: 450px;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .therapist-name {
+                font-size: 1.2rem;
+            }
+            
+            .page-title {
+                font-size: 1.6rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1rem;
+            }
+            
+            .image-placeholder {
+                height: 180px;
+            }
+            
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .download-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #6d8b74 0%, #4a6d5e 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-title">
+        <div class="logo">Jornada Corporal</div>
+        <div class="therapist-name">Esley Reginaldo - Massoterapeuta</div>
+        <p class="tagline">Portfólio profissional mostrando a evolução do trabalho corporal, da célula aos sistemas energéticos</p>
+        
+        <div class="download-container">
+            <a href="#" class="download-btn" id="downloadBtn">
+                <i class="fas fa-download"></i> Baixar Portfólio Completo
+            </a>
+        </div>
+    </div>
+    
+    <div class="book-container">
+        <div class="book" id="book">
+            <!-- Página 1: Capa -->
+            <div class="page" style="background: linear-gradient(135deg, #0c1445 0%, #1a1f25 100%);">
+                <div class="page-content">
+                    <h1 class="page-title">Portfólio Profissional</h1>
+                    <p class="page-subtitle">Massoterapia Integrativa e Técnicas Corporais</p>
+                    <div class="image-placeholder">
+                        <i class="fas fa-portrait"></i>
+                        <div>ft</div>
+                    </div>
+                    <div class="page-num">1</div>
+                </div>
+            </div>
+            
+            <!-- Página 2: A Célula -->
+            <div class="page" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">A Unidade Fundamental</h2>
+                    <p class="page-subtitle">Tudo começa com a célula - a base de toda vida e estrutura corporal</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-microscope"></i>
+                        <div>IMAGEM DE UMA CÉLULA AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p>As células são as unidades básicas da vida, formando todos os tecidos do corpo. Na massoterapia, entender sua estrutura ajuda a compreender como as técnicas afetam os tecidos, promovendo bem-estar e regeneração</p>
+                    </div>
+                    <div class="page-num">2</div>
+                </div>
+            </div>
+            
+            <!-- Página 3: Sistema Linfático -->
+            <div class="page" style="background: linear-gradient(135deg, #0a2c2a 0%, #0f6a5e 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Sistema Linfático</h2>
+                    <p class="page-subtitle">A rede de drenagem e defesa do corpo, essencial para a eliminação de toxinas</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-water"></i>
+                        <div>IMAGEM DO SISTEMA LINFÁTICO AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p>Rede de vasos e gânglios que transporta linfa, eliminando toxinas e fortalecendo a imunidade. A massoterapia, como a drenagem linfática, estimula esse sistema, reduzindo inchaço e melhorando a saúde.
+</p>
+                    </div>
+                    <div class="page-num">3</div>
+                </div>
+            </div>
+            
+            <!-- Página 4: Drenagem Linfática -->
+            <div class="page" style="background: linear-gradient(135deg, #0a2c2a 0%, #1a6a5e 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Drenagem Linfática</h2>
+                    <p class="page-subtitle">Técnica especializada para estimular o sistema linfático e promover detoxificação</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-hands"></i>
+                        <div>FOTO DA DRENAGEM LINFÁTICA AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p>Técnica de massagem suave que estimula o sistema linfático, reduzindo edemas e toxinas. É ideal para melhorar circulação, aliviar inchaços e promover relaxamento, sendo muito usada em tratamentos estéticos.
+</p>
+                    </div>
+                    <div class="page-num">4</div>
+                </div>
+            </div>
+            
+            <!-- Página 5: Sistema Muscular -->
+            <div class="page" style="background: linear-gradient(135deg, #2c0a1d 0%, #6a0f49 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Sistema Muscular</h2>
+                    <p class="page-subtitle">A complexa rede de músculos que permite movimento e sustenta nosso corpo</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-running"></i>
+                        <div>IMAGEM DA ANATOMIA MUSCULAR AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p> Conjunto de músculos que permite movimento e sustenta o corpo. A massoterapia alivia tensões musculares, melhora a flexibilidade e reduz dores, promovendo recuperação e bem-estar físico.
+</p>
+                    </div>
+                    <div class="page-num">5</div>
+                </div>
+            </div>
+            
+            <!-- Página 6: Massagem Relaxante -->
+            <div class="page" style="background: linear-gradient(135deg, #3c0a1d 0%, #7a0f49 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Massagem Relaxante</h2>
+                    <p class="page-subtitle">Técnicas para aliviar tensões musculares e promover bem-estar profundo</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-spa"></i>
+                        <div>FOTO DA MASSAGEM RELAXANTE AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p> Técnica que usa movimentos suaves para aliviar tensões musculares e estresse. Promove relaxamento profundo, melhora a circulação e ajuda no equilíbrio emocional, sendo ideal para o bem-estar geral.
+</p>
+                    </div>
+                    <div class="page-num">6</div>
+                </div>
+            </div>
+            
+            <!-- Página 7: Massagem Modeladora -->
+            <div class="page" style="background: linear-gradient(135deg, #4c0a1d 0%, #8a0f49 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Massagem Modeladora</h2>
+                    <p class="page-subtitle">Técnicas específicas para modelar o corpo e ativar a circulação</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-hand-point-up"></i>
+                        <div>FOTO DA MASSAGEM MODELADORA AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p> Massagem com movimentos intensos que ajudam a reduzir medidas e modelar o corpo. Atua na circulação e no tecido adiposo, melhorando o contorno corporal e a textura da pele.
+</p>
+                    </div>
+                    <div class="page-num">7</div>
+                </div>
+            </div>
+            
+            <!-- Página 8: Meridianos Energéticos -->
+            <div class="page" style="background: linear-gradient(135deg, #2a1a1f 0%, #5e3c3c 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Meridianos Energéticos</h2>
+                    <p class="page-subtitle">Os 12 principais canais de energia que percorrem o corpo segundo a MTC</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-project-diagram"></i>
+                        <div>IMAGEM DOS MERIDIANOS AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p>Canais de energia da Medicina Tradicional Chinesa por onde flui o "Qi". A massoterapia, como o shiatsu, estimula esses meridianos para equilibrar a energia, promovendo saúde física e emocional.
+</p>
+                    </div>
+                    <div class="page-num">8</div>
+                </div>
+            </div>
+            
+            <!-- Página 9: Shiatsu -->
+            <div class="page" style="background: linear-gradient(135deg, #2a1a2c 0%, #5e3c5e 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Shiatsu</h2>
+                    <p class="page-subtitle">Técnica de pressão que equilibra a energia nos meridianos</p>
+                    
+                    <div class="image-placeholder">
+                        <i class="fas fa-hand-paper"></i>
+                        <div>FOTO DA TÉCNICA SHIATSU AQUI</div>
+                    </div>
+                    
+                    <div class="text-placeholder">
+                        <p>Técnica japonesa que aplica pressão em pontos dos meridianos para equilibrar a energia vital. Alivia dores, reduz estresse e promove harmonia, sendo eficaz para relaxamento e bem-estar integral.</p>
+                    </div>
+                    <div class="page-num">9</div>
+                </div>
+            </div>
+            
+            <!-- Página 10: Contato -->
+            <div class="page" style="background: linear-gradient(135deg, #1a1f25 0%, #0c1445 100%);">
+                <div class="page-content">
+                    <h2 class="page-title">Entre em Contato</h2>
+                    <p class="page-subtitle">Agende sua sessão e viva a experiência de uma massoterapia completa</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>(XX) XXXX-XXXX</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>esley@massoterapia.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Sua Localização</span>
+                        </div>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                    
+                    <div class="copyright">
+                        &copy; 2023 Esley Reginaldo - Todos os direitos reservados
+                    </div>
+                    <div class="page-num">10</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="nav-btn" id="prev-btn">
+            <i class="fas fa-chevron-left"></i> Anterior
+        </button>
+        <button class="nav-btn" id="next-btn">
+            Próxima <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <div class="page-indicator" id="page-indicator">
+        <!-- Os pontos serão gerados por JavaScript -->
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <h2 class="footer-title">Esley Reginaldo - Massoterapeuta</h2>
+            <p class="tagline">Especialista em técnicas integrativas de massoterapia</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>(XX) XXXX-XXXX</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>esley@massoterapia.com</span>
+                </div>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 Esley Reginaldo | Portfólio Profissional de Massoterapia
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const book = document.getElementById('book');
+            const pages = document.querySelectorAll('.page');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const pageIndicator = document.getElementById('page-indicator');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            let currentPage = 0;
+            const totalPages = pages.length;
+            
+            // Inicializar indicadores de página
+            function initPageIndicators() {
+                for (let i = 0; i < totalPages; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'page-dot';
+                    if (i === 0) dot.classList.add('active');
+                    dot.dataset.page = i;
+                    dot.addEventListener('click', function() {
+                        goToPage(parseInt(this.dataset.page));
+                    });
+                    pageIndicator.appendChild(dot);
+                }
+            }
+            
+            // Atualizar estado dos botões
+            function updateButtons() {
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage === totalPages - 1;
+                
+                // Atualizar indicadores de página
+                document.querySelectorAll('.page-dot').forEach((dot, index) => {
+                    if (index === currentPage) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Animação de virar página
+            function animatePage() {
+                // Resetar todas as páginas
+                pages.forEach((page, index) => {
+                    if (index < currentPage) {
+                        // Páginas à esquerda
+                        page.style.transform = 'rotateY(-180deg)';
+                        page.style.zIndex = totalPages - index;
+                    } else if (index === currentPage) {
+                        // Página atual
+                        page.style.transform = 'rotateY(0deg)';
+                        page.style.zIndex = totalPages;
+                    } else {
+                        // Páginas à direita
+                        page.style.transform = 'rotateY(0deg)';
+                        page.style.zIndex = totalPages - index;
+                    }
+                });
+            }
+            
+            // Ir para página específica
+            function goToPage(pageIndex) {
+                if (pageIndex < 0 || pageIndex >= totalPages) return;
+                
+                currentPage = pageIndex;
+                animatePage();
+                updateButtons();
+            }
+            
+            // Event listeners
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 0) {
+                    goToPage(currentPage - 1);
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentPage < totalPages - 1) {
+                    goToPage(currentPage + 1);
+                }
+            });
+            
+            // Download do arquivo
+            downloadBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Criar o conteúdo do arquivo
+                const content = document.documentElement.outerHTML;
+                
+                // Criar um Blob com o conteúdo
+                const blob = new Blob([content], {type: 'text/html'});
+                
+                // Criar um link para download
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'portfolio_esley_reginaldo.html';
+                
+                // Disparar o download
+                document.body.appendChild(a);
+                a.click();
+                
+                // Limpar
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            });
+            
+            // Inicializar
+            initPageIndicators();
+            updateButtons();
+            animatePage();
+            
+            // Adicionar efeito inicial
+            book.style.transform = 'rotateY(0deg)';
+            
+            // Adicionar animação sutil nas páginas
+            setInterval(() => {
+                if (currentPage > 0 && currentPage < totalPages - 1) {
+                    pages[currentPage].style.animation = 'pulse 3s ease-in-out';
+                    setTimeout(() => {
+                        pages[currentPage].style.animation = '';
+                    }, 3000);
+                }
+            }, 7000);
+        });
+    </script>
+</body>
+</html>
