@@ -2,741 +2,1178 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio | Esley Reginaldo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Portfólio interativo de Esley Reginaldo, massoterapeuta especializado em técnicas integrativas">
+    <meta name="theme-color" content="#d4af37">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Esley Reginaldo - Massoterapeuta | Portfólio Interativo</title>
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* CSS Variables */
+        :root {
+            --primary: #d4af37;
+            --primary-dark: #b8860b;
+            --bg-dark: #0a0e1a;
+            --bg-card: #1a1f2e;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #6366f1;
+            --success: #10b981;
+            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --vh: 1vh;
+        }
+
+        /* Light Theme */
+        body[data-theme="light"] {
+            --bg-dark: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-light: #343a40;
+            --text-muted: #6c757d;
+            --primary: #c29b0c;
+            --primary-dark: #a17c09;
+        }
+
+        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
         body {
-            background: linear-gradient(135deg, #1a1f25 0%, #0c0e12 100%);
-            color: #f0f0f0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at top, #1e1b4b 0%, var(--bg-dark) 50%);
+            color: var(--text-light);
             overflow-x: hidden;
-        }
-        
-        .portfolio-title {
-            text-align: center;
-            margin-bottom: 2rem;
-            max-width: 800px;
-        }
-        
-        .logo {
-            font-size: 2.8rem;
-            font-weight: 300;
-            color: #d4af37;
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
-        }
-        
-        .therapist-name {
-            color: #a3b1c6;
-            font-size: 1.4rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .tagline {
-            font-size: 1.1rem;
-            color: #6a7b94;
-            max-width: 600px;
-            margin: 0 auto;
+            min-height: 100vh;
+            transition: background 0.5s ease;
             line-height: 1.6;
         }
-        
-        /* Livro Estilo */
-        .book-container {
+
+        body[data-theme="light"] {
+            background: radial-gradient(ellipse at top, #e0e7ff 0%, var(--bg-dark) 50%);
+        }
+
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1e1b4b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-content {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .loader-logo {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 300;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .loader-text {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: clamp(0.9rem, 3vw, 1rem);
+        }
+
+        .loader-bar {
+            width: min(200px, 80vw);
+            height: 3px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            animation: loading 2s ease forwards;
+        }
+
+        @keyframes loading {
+            to { width: 100%; }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        body[data-theme="light"] .header {
+            background: rgba(248, 249, 250, 0.95);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
             position: relative;
-            width: 95%;
-            max-width: 900px;
-            height: 550px;
-            perspective: 2000px;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 26, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-link {
+                font-size: 1.1rem;
+                padding: 1rem;
+                text-align: center;
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 10px;
+                background: rgba(255,255,255,0.05);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 1rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 31, 46, 0.8) 0%, rgba(10, 14, 26, 0.9) 100%);
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.2;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); }
+            100% { transform: translateY(-100px) translateX(100px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 1rem;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 4vw, 1.5rem);
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            color: var(--text-light);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            min-width: 180px;
+            min-height: 50px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #000;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 3rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
             margin-bottom: 3rem;
         }
-        
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: var(--text-muted);
+        }
+
+        /* Book 3D */
+        .book-3d {
+            perspective: 1500px;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .book-container {
+            position: relative;
+            width: min(800px, 95vw);
+            height: min(500px, 70vh);
+            min-height: 400px;
+        }
+
         .book {
             position: relative;
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: transform 0.8s ease;
         }
-        
+
         .page {
             position: absolute;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
-            background: #1e2329;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             transform-origin: left center;
-            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
         }
-        
-        .page-content {
+
+        .page-inner {
             width: 100%;
             height: 100%;
+            padding: clamp(1.5rem, 4vw, 3rem);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .page-content {
             position: relative;
             z-index: 2;
-            padding: 1.5rem;
         }
-        
-        .page-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #d4af37;
-            font-weight: 400;
-            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
-        }
-        
-        .page-subtitle {
-            font-size: 1.1rem;
+
+        .page-icon {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            color: var(--primary);
             margin-bottom: 1.5rem;
-            color: #a3b1c6;
-            max-width: 90%;
-            line-height: 1.6;
+            text-align: center;
         }
-        
-        .image-placeholder {
-            width: 100%;
-            height: 250px;
-            background: #2d3748;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 1rem 0;
-            border: 2px dashed #4a5568;
-            color: #a0aec0;
-            font-style: italic;
-        }
-        
-        .image-placeholder i {
-            font-size: 3rem;
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--primary);
             margin-bottom: 1rem;
-            display: block;
+            text-align: center;
         }
-        
-        .text-placeholder {
-            width: 100%;
-            padding: 1rem;
-            background: #2d3748;
-            border-radius: 8px;
-            margin-top: 1rem;
-            color: #a0aec0;
-            font-style: italic;
-            border: 2px dashed #4a5568;
+
+        .page-subtitle {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
-        
-        .page-num {
+
+        .page-text {
+            background: rgba(255,255,255,0.05);
+            padding: clamp(1rem, 3vw, 2rem);
+            border-radius: 15px;
+            border-left: 4px solid var(--primary);
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            max-height: 60%;
+            overflow-y: auto;
+        }
+
+        .page-text h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .page-text ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .page-text li {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .page-number {
             position: absolute;
             bottom: 15px;
             right: 20px;
-            color: #4a5568;
-            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+            z-index: 3;
         }
-        
-        /* Controles de navegação */
-        .controls {
+
+        /* Controls */
+        .book-controls {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin: 1.5rem 0;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
         }
-        
-        .nav-btn {
-            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-            color: #1a1f25;
+
+        .control-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #000;
             border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 50px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-            font-weight: 600;
+            gap: 0.5rem;
+            min-width: 160px;
+            min-height: 50px;
+            font-size: 0.85rem;
         }
-        
-        .nav-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(212, 175, 55, 0.6);
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
         }
-        
-        .nav-btn:disabled {
-            background: #4a5568;
-            color: #a0aec0;
+
+        .control-btn:disabled {
+            background: #374151;
+            color: #6b7280;
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
         }
-        
-        .page-indicator {
+
+        /* Progress */
+        .page-progress {
             display: flex;
             justify-content: center;
-            gap: 0.8rem;
-            margin-top: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .page-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #4a5568;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .page-dot.active {
-            background: #d4af37;
-            transform: scale(1.3);
-        }
-        
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #0d1117 0%, #1a1f25 100%);
-            color: #a3b1c6;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 3rem;
-            border-top: 1px solid #2d3748;
-            width: 100%;
-            max-width: 900px;
-            border-radius: 10px;
-        }
-        
-        .footer-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: #d4af37;
-            font-weight: 300;
-        }
-        
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 1.5rem 0;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
         }
-        
-        .contact-item {
+
+        .progress-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .progress-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            font-size: 1rem;
-        }
-        
-        .social-icons {
-            margin: 2rem 0;
-            display: flex;
             justify-content: center;
-            gap: 1.8rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            color: var(--primary);
+            font-size: 1.2rem;
         }
-        
-        .social-icons a {
-            color: #d4af37;
-            font-size: 1.8rem;
-            transition: all 0.3s ease;
+
+        /* Services */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 1rem;
         }
-        
-        .social-icons a:hover {
-            color: #ff416c;
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
             transform: translateY(-5px);
+            border-color: var(--primary);
         }
-        
-        .copyright {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #4a5568;
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
-        
-        /* Animações */
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 10px rgba(106, 17, 203, 0.6); }
-            50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(106, 17, 203, 0.8); }
-            100% { transform: scale(1); box-shadow: 0 0 10px rgba(106, 17, 203, 0.6); }
+
+        .feature-title {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
         }
-        
-        /* Responsividade */
-        @media (max-width: 900px) {
-            .book-container {
-                height: 500px;
-            }
-            
-            .page-title {
-                font-size: 1.8rem;
-            }
-            
-            .image-placeholder {
-                height: 200px;
-            }
+
+        .feature-description {
+            color: var(--text-muted);
+            line-height: 1.6;
         }
-        
-        @media (max-width: 600px) {
-            .book-container {
-                height: 450px;
-            }
-            
-            .logo {
-                font-size: 2.2rem;
-            }
-            
-            .therapist-name {
-                font-size: 1.2rem;
-            }
-            
-            .page-title {
-                font-size: 1.6rem;
-            }
-            
-            .page-subtitle {
-                font-size: 1rem;
-            }
-            
-            .image-placeholder {
-                height: 180px;
-            }
-            
-            .nav-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-        }
-        
-        .download-container {
-            margin: 20px 0;
+
+        /* Contact */
+        .contact-section {
+            background: linear-gradient(135deg, #1e1b4b 0%, var(--bg-dark) 100%);
+            padding: 3rem 1rem;
+            margin: 3rem 1rem;
+            border-radius: 30px;
             text-align: center;
         }
-        
-        .download-btn {
-            background: linear-gradient(135deg, #6d8b74 0%, #4a6d5e 100%);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
-        
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+
+        .contact-card {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-title {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-info {
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .book-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                margin: 2rem 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="portfolio-title">
-        <div class="logo">Jornada Corporal</div>
-        <div class="therapist-name">Esley Reginaldo - Massoterapeuta</div>
-        <p class="tagline">Portfólio profissional mostrando a evolução do trabalho corporal, da célula aos sistemas energéticos</p>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">Jornada Corporal</div>
+            <div class="loader-text">Carregando experiência...</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav-container">
+            <div class="nav-logo">Esley Reginaldo</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link">Início</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfólio</a></li>
+                <li><a href="#services" class="nav-link">Serviços</a></li>
+                <li><a href="#contact" class="nav-link">Contato</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles" id="particles"></div>
         
-        <div class="download-container">
-            <a href="#" class="download-btn" id="downloadBtn">
-                <i class="fas fa-download"></i> Baixar Portfólio Completo
+        <div class="hero-content">
+            <h1 class="hero-title">Jornada Corporal</h1>
+            <p class="hero-subtitle">Esley Reginaldo - Massoterapeuta</p>
+            <p class="hero-description">
+                Uma experiência única de bem-estar que integra técnicas milenares com abordagens modernas, 
+                proporcionando equilíbrio entre corpo, mente e energia vital.
+            </p>
+            <div class="hero-cta">
+                <a href="#portfolio" class="btn btn-primary">
+                    <i class="fas fa-book-open"></i>
+                    Explorar Portfólio
+                </a>
+                <a href="#contact" class="btn btn-outline">
+                    <i class="fas fa-calendar-alt"></i>
+                    Agendar Consulta
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="section-title">
+            <h2>Portfólio Interativo</h2>
+            <p>Navegue através das páginas para conhecer minha jornada profissional</p>
+        </div>
+
+        <div class="book-3d">
+            <div class="book-container">
+                <div class="book" id="book">
+                    <!-- Páginas serão criadas pelo JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="book-controls">
+            <button class="control-btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i> Anterior
+            </button>
+            <button class="control-btn" id="nextBtn">
+                Próxima <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="page-progress" id="pageProgress">
+            <!-- Dots serão criados pelo JavaScript -->
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="section-title">
+            <h2>Serviços Especializados</h2>
+            <p>Técnicas personalizadas para cada necessidade</p>
+        </div>
+
+        <div class="feature-grid" id="servicesGrid">
+            <!-- Serviços serão carregados pelo JavaScript -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-title">
+            <h2>Entre em Contato</h2>
+            <p>Agende sua sessão e inicie sua jornada de bem-estar</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3 class="contact-title">Telefone</h3>
+                <p class="contact-info">(11) 99999-9999</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3 class="contact-title">E-mail</h3>
+                <p class="contact-info">esley@massoterapia.com</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 class="contact-title">Localização</h3>
+                <p class="contact-info">São Paulo - SP</p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <h3 class="contact-title">WhatsApp</h3>
+                <p class="contact-info">Atendimento Direto</p>
+            </div>
+        </div>
+
+        <div class="hero-cta" style="margin-top: 3rem;">
+            <a href="https://wa.me/5511999999999" class="btn btn-primary" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="mailto:esley@massoterapia.com" class="btn btn-outline">
+                <i class="fas fa-envelope"></i> E-mail
             </a>
         </div>
-    </div>
-    
-    <div class="book-container">
-        <div class="book" id="book">
-            <!-- Página 1: Capa -->
-            <div class="page" style="background: linear-gradient(135deg, #0c1445 0%, #1a1f25 100%);">
-                <div class="page-content">
-                    <h1 class="page-title">Portfólio Profissional</h1>
-                    <p class="page-subtitle">Massoterapia Integrativa e Técnicas Corporais</p>
-                    <div class="image-placeholder">
-                        <i class="fas fa-portrait"></i>
-                        <div>ft</div>
-                    </div>
-                    <div class="page-num">1</div>
-                </div>
-            </div>
-            
-            <!-- Página 2: A Célula -->
-            <div class="page" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">A Unidade Fundamental</h2>
-                    <p class="page-subtitle">Tudo começa com a célula - a base de toda vida e estrutura corporal</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-microscope"></i>
-                        <div>IMAGEM DE UMA CÉLULA AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p>As células são as unidades básicas da vida, formando todos os tecidos do corpo. Na massoterapia, entender sua estrutura ajuda a compreender como as técnicas afetam os tecidos, promovendo bem-estar e regeneração</p>
-                    </div>
-                    <div class="page-num">2</div>
-                </div>
-            </div>
-            
-            <!-- Página 3: Sistema Linfático -->
-            <div class="page" style="background: linear-gradient(135deg, #0a2c2a 0%, #0f6a5e 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Sistema Linfático</h2>
-                    <p class="page-subtitle">A rede de drenagem e defesa do corpo, essencial para a eliminação de toxinas</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-water"></i>
-                        <div>IMAGEM DO SISTEMA LINFÁTICO AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p>Rede de vasos e gânglios que transporta linfa, eliminando toxinas e fortalecendo a imunidade. A massoterapia, como a drenagem linfática, estimula esse sistema, reduzindo inchaço e melhorando a saúde.
-</p>
-                    </div>
-                    <div class="page-num">3</div>
-                </div>
-            </div>
-            
-            <!-- Página 4: Drenagem Linfática -->
-            <div class="page" style="background: linear-gradient(135deg, #0a2c2a 0%, #1a6a5e 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Drenagem Linfática</h2>
-                    <p class="page-subtitle">Técnica especializada para estimular o sistema linfático e promover detoxificação</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-hands"></i>
-                        <div>FOTO DA DRENAGEM LINFÁTICA AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p>Técnica de massagem suave que estimula o sistema linfático, reduzindo edemas e toxinas. É ideal para melhorar circulação, aliviar inchaços e promover relaxamento, sendo muito usada em tratamentos estéticos.
-</p>
-                    </div>
-                    <div class="page-num">4</div>
-                </div>
-            </div>
-            
-            <!-- Página 5: Sistema Muscular -->
-            <div class="page" style="background: linear-gradient(135deg, #2c0a1d 0%, #6a0f49 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Sistema Muscular</h2>
-                    <p class="page-subtitle">A complexa rede de músculos que permite movimento e sustenta nosso corpo</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-running"></i>
-                        <div>IMAGEM DA ANATOMIA MUSCULAR AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p> Conjunto de músculos que permite movimento e sustenta o corpo. A massoterapia alivia tensões musculares, melhora a flexibilidade e reduz dores, promovendo recuperação e bem-estar físico.
-</p>
-                    </div>
-                    <div class="page-num">5</div>
-                </div>
-            </div>
-            
-            <!-- Página 6: Massagem Relaxante -->
-            <div class="page" style="background: linear-gradient(135deg, #3c0a1d 0%, #7a0f49 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Massagem Relaxante</h2>
-                    <p class="page-subtitle">Técnicas para aliviar tensões musculares e promover bem-estar profundo</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-spa"></i>
-                        <div>FOTO DA MASSAGEM RELAXANTE AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p> Técnica que usa movimentos suaves para aliviar tensões musculares e estresse. Promove relaxamento profundo, melhora a circulação e ajuda no equilíbrio emocional, sendo ideal para o bem-estar geral.
-</p>
-                    </div>
-                    <div class="page-num">6</div>
-                </div>
-            </div>
-            
-            <!-- Página 7: Massagem Modeladora -->
-            <div class="page" style="background: linear-gradient(135deg, #4c0a1d 0%, #8a0f49 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Massagem Modeladora</h2>
-                    <p class="page-subtitle">Técnicas específicas para modelar o corpo e ativar a circulação</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-hand-point-up"></i>
-                        <div>FOTO DA MASSAGEM MODELADORA AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p> Massagem com movimentos intensos que ajudam a reduzir medidas e modelar o corpo. Atua na circulação e no tecido adiposo, melhorando o contorno corporal e a textura da pele.
-</p>
-                    </div>
-                    <div class="page-num">7</div>
-                </div>
-            </div>
-            
-            <!-- Página 8: Meridianos Energéticos -->
-            <div class="page" style="background: linear-gradient(135deg, #2a1a1f 0%, #5e3c3c 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Meridianos Energéticos</h2>
-                    <p class="page-subtitle">Os 12 principais canais de energia que percorrem o corpo segundo a MTC</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-project-diagram"></i>
-                        <div>IMAGEM DOS MERIDIANOS AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p>Canais de energia da Medicina Tradicional Chinesa por onde flui o "Qi". A massoterapia, como o shiatsu, estimula esses meridianos para equilibrar a energia, promovendo saúde física e emocional.
-</p>
-                    </div>
-                    <div class="page-num">8</div>
-                </div>
-            </div>
-            
-            <!-- Página 9: Shiatsu -->
-            <div class="page" style="background: linear-gradient(135deg, #2a1a2c 0%, #5e3c5e 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Shiatsu</h2>
-                    <p class="page-subtitle">Técnica de pressão que equilibra a energia nos meridianos</p>
-                    
-                    <div class="image-placeholder">
-                        <i class="fas fa-hand-paper"></i>
-                        <div>FOTO DA TÉCNICA SHIATSU AQUI</div>
-                    </div>
-                    
-                    <div class="text-placeholder">
-                        <p>Técnica japonesa que aplica pressão em pontos dos meridianos para equilibrar a energia vital. Alivia dores, reduz estresse e promove harmonia, sendo eficaz para relaxamento e bem-estar integral.</p>
-                    </div>
-                    <div class="page-num">9</div>
-                </div>
-            </div>
-            
-            <!-- Página 10: Contato -->
-            <div class="page" style="background: linear-gradient(135deg, #1a1f25 0%, #0c1445 100%);">
-                <div class="page-content">
-                    <h2 class="page-title">Entre em Contato</h2>
-                    <p class="page-subtitle">Agende sua sessão e viva a experiência de uma massoterapia completa</p>
-                    
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>(XX) XXXX-XXXX</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>esley@massoterapia.com</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Sua Localização</span>
-                        </div>
-                    </div>
-                    
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                    
-                    <div class="copyright">
-                        &copy; 2023 Esley Reginaldo - Todos os direitos reservados
-                    </div>
-                    <div class="page-num">10</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="controls">
-        <button class="nav-btn" id="prev-btn">
-            <i class="fas fa-chevron-left"></i> Anterior
-        </button>
-        <button class="nav-btn" id="next-btn">
-            Próxima <i class="fas fa-chevron-right"></i>
-        </button>
-    </div>
-    
-    <div class="page-indicator" id="page-indicator">
-        <!-- Os pontos serão gerados por JavaScript -->
-    </div>
-    
-    <footer>
-        <div class="footer-content">
-            <h2 class="footer-title">Esley Reginaldo - Massoterapeuta</h2>
-            <p class="tagline">Especialista em técnicas integrativas de massoterapia</p>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>(XX) XXXX-XXXX</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>esley@massoterapia.com</span>
-                </div>
-            </div>
-            
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            
-            <div class="copyright">
-                &copy; 2023 Esley Reginaldo | Portfólio Profissional de Massoterapia
-            </div>
-        </div>
-    </footer>
-    
+    </section>
+
     <script>
+        // Content data
+        const portfolioPages = [
+            {
+                title: "Bem-vindo",
+                subtitle: "Apresentação Profissional",
+                icon: "fas fa-user-md",
+                bgGradient: "linear-gradient(135deg, #1e1b4b 0%, #3730a3 100%)",
+                content: `
+                    <h3>Sobre Mim</h3>
+                    <p>Sou Esley Reginaldo, massoterapeuta especializado em técnicas integrativas que combinam conhecimentos ancestrais com práticas modernas de bem-estar.</p>
+                    <p>Minha missão é proporcionar uma experiência única de cura e equilíbrio, trabalhando desde o nível celular até os sistemas energéticos mais complexos do corpo humano.</p>
+                `
+            },
+            {
+                title: "Nível Celular",
+                subtitle: "A base de toda vida",
+                icon: "fas fa-dna",
+                bgGradient: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+                content: `
+                    <h3>Fundamentos Microscópicos</h3>
+                    <p>Toda técnica de massoterapia inicia seu trabalho no nível mais fundamental: a célula.</p>
+                    <ul>
+                        <li>Melhora da oxigenação celular</li>
+                        <li>Aceleração do metabolismo</li>
+                        <li>Eliminação de toxinas</li>
+                        <li>Regeneração tecidual</li>
+                        <li>Equilíbrio do pH celular</li>
+                    </ul>
+                `
+            },
+            {
+                title: "Sistema Circulatório",
+                subtitle: "Fluxo da vida",
+                icon: "fas fa-heartbeat",
+                bgGradient: "linear-gradient(135deg, #7c2d12 0%, #dc2626 100%)",
+                content: `
+                    <h3>Circulação e Vitalidade</h3>
+                    <p>As técnicas de massoterapia trabalham diretamente no sistema circulatório.</p>
+                    <ul>
+                        <li>Melhora da circulação sanguínea</li>
+                        <li>Redução da pressão arterial</li>
+                        <li>Fortalecimento cardiovascular</li>
+                        <li>Eliminação de toxinas via linfa</li>
+                        <li>Oxigenação dos tecidos</li>
+                    </ul>
+                `
+            }
+        ];
+
+        const services = [
+            {
+                title: "Drenagem Linfática",
+                icon: "fas fa-leaf",
+                description: "Técnica especializada para eliminação de toxinas, redução de inchaço e fortalecimento do sistema imunológico. Ideal para pós-operatório e bem-estar geral."
+            },
+            {
+                title: "Massagem Relaxante",
+                icon: "fas fa-spa",
+                description: "Movimentos suaves e rítmicos que promovem relaxamento profundo, alívio do estresse e melhora da qualidade do sono."
+            },
+            {
+                title: "Shiatsu",
+                icon: "fas fa-hand-paper",
+                description: "Técnica oriental que utiliza pressão com dedos e palmas sobre pontos específicos do corpo, promovendo equilíbrio energético."
+            },
+            {
+                title: "Reflexologia",
+                icon: "fas fa-foot-print",
+                description: "Massagem nos pés que atua em pontos reflexos correspondentes aos órgãos do corpo, proporcionando relaxamento."
+            }
+        ];
+
+        // Global variables
+        let currentPage = 0;
+        let totalPages = portfolioPages.length;
+        let currentTheme = 'dark';
+
+        // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            const book = document.getElementById('book');
-            const pages = document.querySelectorAll('.page');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const pageIndicator = document.getElementById('page-indicator');
-            const downloadBtn = document.getElementById('downloadBtn');
-            
-            let currentPage = 0;
-            const totalPages = pages.length;
-            
-            // Inicializar indicadores de página
-            function initPageIndicators() {
-                for (let i = 0; i < totalPages; i++) {
-                    const dot = document.createElement('div');
-                    dot.className = 'page-dot';
-                    if (i === 0) dot.classList.add('active');
-                    dot.dataset.page = i;
-                    dot.addEventListener('click', function() {
-                        goToPage(parseInt(this.dataset.page));
-                    });
-                    pageIndicator.appendChild(dot);
-                }
-            }
-            
-            // Atualizar estado dos botões
-            function updateButtons() {
-                prevBtn.disabled = currentPage === 0;
-                nextBtn.disabled = currentPage === totalPages - 1;
-                
-                // Atualizar indicadores de página
-                document.querySelectorAll('.page-dot').forEach((dot, index) => {
-                    if (index === currentPage) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Animação de virar página
-            function animatePage() {
-                // Resetar todas as páginas
-                pages.forEach((page, index) => {
-                    if (index < currentPage) {
-                        // Páginas à esquerda
-                        page.style.transform = 'rotateY(-180deg)';
-                        page.style.zIndex = totalPages - index;
-                    } else if (index === currentPage) {
-                        // Página atual
-                        page.style.transform = 'rotateY(0deg)';
-                        page.style.zIndex = totalPages;
-                    } else {
-                        // Páginas à direita
-                        page.style.transform = 'rotateY(0deg)';
-                        page.style.zIndex = totalPages - index;
-                    }
-                });
-            }
-            
-            // Ir para página específica
-            function goToPage(pageIndex) {
-                if (pageIndex < 0 || pageIndex >= totalPages) return;
-                
-                currentPage = pageIndex;
-                animatePage();
-                updateButtons();
-            }
-            
-            // Event listeners
-            prevBtn.addEventListener('click', function() {
-                if (currentPage > 0) {
-                    goToPage(currentPage - 1);
-                }
-            });
-            
-            nextBtn.addEventListener('click', function() {
-                if (currentPage < totalPages - 1) {
-                    goToPage(currentPage + 1);
-                }
-            });
-            
-            // Download do arquivo
-            downloadBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Criar o conteúdo do arquivo
-                const content = document.documentElement.outerHTML;
-                
-                // Criar um Blob com o conteúdo
-                const blob = new Blob([content], {type: 'text/html'});
-                
-                // Criar um link para download
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'portfolio_esley_reginaldo.html';
-                
-                // Disparar o download
-                document.body.appendChild(a);
-                a.click();
-                
-                // Limpar
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
-            });
-            
-            // Inicializar
-            initPageIndicators();
-            updateButtons();
-            animatePage();
-            
-            // Adicionar efeito inicial
-            book.style.transform = 'rotateY(0deg)';
-            
-            // Adicionar animação sutil nas páginas
-            setInterval(() => {
-                if (currentPage > 0 && currentPage < totalPages - 1) {
-                    pages[currentPage].style.animation = 'pulse 3s ease-in-out';
-                    setTimeout(() => {
-                        pages[currentPage].style.animation = '';
-                    }, 3000);
-                }
-            }, 7000);
+            setTimeout(() => {
+                initializeApp();
+                hideLoader();
+            }, 2000);
         });
+
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }
+        }
+
+        function initializeApp() {
+            try {
+                createParticles();
+                loadPortfolioPages();
+                loadServices();
+                setupEventListeners();
+                updateBookDisplay();
+                updatePageProgress();
+                updateNavigationButtons();
+                console.log('App inicializado com sucesso!');
+            } catch (error) {
+                console.error('Erro na inicialização:', error);
+                hideLoader();
+            }
+        }
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            const particleCount = window.innerWidth <= 768 ? 15 : 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    width: ${Math.random() * 6 + 2}px;
+                    height: ${Math.random() * 6 + 2}px;
+                    left: ${Math.random() * 100}%;
+                    animation-delay: ${Math.random() * 20}s;
+                    animation-duration: ${Math.random() * 20 + 20}s;
+                `;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function loadPortfolioPages() {
+            const bookElement = document.getElementById('book');
+            if (!bookElement) return;
+            
+            bookElement.innerHTML = '';
+            
+            portfolioPages.forEach((page, index) => {
+                const pageElement = document.createElement('div');
+                pageElement.className = 'page';
+                pageElement.dataset.page = index;
+                pageElement.innerHTML = `
+                    <div class="page-bg" style="background: ${page.bgGradient};"></div>
+                    <div class="page-inner">
+                        <div class="page-content">
+                            <div class="page-icon">
+                                <i class="${page.icon}"></i>
+                            </div>
+                            <h2 class="page-title">${page.title}</h2>
+                            <p class="page-subtitle">${page.subtitle}</p>
+                            <div class="page-text">
+                                ${page.content}
+                            </div>
+                            <div class="page-number">${(index + 1).toString().padStart(2, '0')}</div>
+                        </div>
+                    </div>
+                `;
+                bookElement.appendChild(pageElement);
+            });
+        }
+
+        function loadServices() {
+            const servicesGrid = document.getElementById('servicesGrid');
+            if (!servicesGrid) return;
+            
+            servicesGrid.innerHTML = '';
+            
+            services.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'feature-card';
+                serviceCard.innerHTML = `
+                    <div class="feature-icon">
+                        <i class="${service.icon}"></i>
+                    </div>
+                    <h3 class="feature-title">${service.title}</h3>
+                    <p class="feature-description">${service.description}</p>
+                `;
+                servicesGrid.appendChild(serviceCard);
+            });
+        }
+
+        function setupEventListeners() {
+            // Navigation buttons
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const themeToggle = document.getElementById('themeToggle');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (prevBtn) prevBtn.addEventListener('click', prevPage);
+            if (nextBtn) nextBtn.addEventListener('click', nextPage);
+            if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+            
+            // Mobile menu
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.className = navMenu.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
+                });
+                
+                // Close menu when clicking links
+                navMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navMenu.classList.remove('active');
+                        const icon = mobileMenuBtn.querySelector('i');
+                        icon.className = 'fas fa-bars';
+                    });
+                });
+            }
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextPage();
+                if (e.key === 'ArrowLeft') prevPage();
+            });
+            
+            // Touch gestures (simplified)
+            let startX = 0;
+            const book = document.getElementById('book');
+            if (book) {
+                book.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                });
+                
+                book.addEventListener('touchend', (e) => {
+                    const endX = e.changedTouches[0].clientX;
+                    const diff = startX - endX;
+                    
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) {
+                            nextPage();
+                        } else {
+                            prevPage();
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateBookDisplay() {
+            const book = document.getElementById('book');
+            if (!book) return;
+            
+            const pages = book.querySelectorAll('.page');
+            pages.forEach((page, index) => {
+                if (index === currentPage) {
+                    page.style.transform = 'rotateY(0deg)';
+                    page.style.zIndex = totalPages - index;
+                    page.style.opacity = '1';
+                } else if (index < currentPage) {
+                    page.style.transform = 'rotateY(-180deg)';
+                    page.style.zIndex = index;
+                    page.style.opacity = '0.7';
+                } else {
+                    page.style.transform = 'rotateY(0deg)';
+                    page.style.zIndex = totalPages - index;
+                    page.style.opacity = '0.3';
+                }
+            });
+        }
+
+        function updatePageProgress() {
+            const progressContainer = document.getElementById('pageProgress');
+            if (!progressContainer) return;
+            
+            progressContainer.innerHTML = '';
+            
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                if (i === currentPage) dot.classList.add('active');
+                
+                dot.addEventListener('click', () => goToPage(i));
+                progressContainer.appendChild(dot);
+            }
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (prevBtn) prevBtn.disabled = currentPage === 0;
+            if (nextBtn) nextBtn.disabled = currentPage === totalPages - 1;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                updateBookDisplay();
+                updatePageProgress();
+                updateNavigationButtons();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updateBookDisplay();
+                updatePageProgress();
+                updateNavigationButtons();
+            }
+        }
+
+        function goToPage(pageIndex) {
+            if (pageIndex >= 0 && pageIndex < totalPages) {
+                currentPage = pageIndex;
+                updateBookDisplay();
+                updatePageProgress();
+                updateNavigationButtons();
+            }
+        }
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', currentTheme);
+            
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+                const icon = themeToggle.querySelector('i');
+                icon.className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+        }
+
+        // Error handling
+        window.addEventListener('error', (e) => {
+            console.error('Erro capturado:', e.error);
+            hideLoader();
+        });
+        
+        // Fallback timeout
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            if (loader && loader.style.display !== 'none') {
+                console.log('Forçando remoção do loader por timeout');
+                hideLoader();
+            }
+        }, 5000);
+        
+        // Prevent iOS bounce
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.page-text')) return;
+            e.preventDefault();
+        }, { passive: false });
+        
+        console.log('Scripts carregados! Site otimizado para mobile 📱');
     </script>
 </body>
 </html>
